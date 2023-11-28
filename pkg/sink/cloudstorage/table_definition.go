@@ -189,6 +189,17 @@ type TableDefinition struct {
 	Type         timodel.ActionType `json:"Type"`
 	Columns      []TableCol         `json:"TableColumns"`
 	TotalColumns int                `json:"TableColumnsTotal"`
+	ColNameToIdx map[string]int     `json:"-"`
+}
+
+func (t *TableDefinition) BuildColNameToIdx() error {
+	for i, col := range t.Columns {
+		if _, ok := t.ColNameToIdx[col.Name]; ok {
+			return errors.Errorf("duplicate column name %s", col.Name)
+		}
+		t.ColNameToIdx[col.Name] = i
+	}
+	return nil
 }
 
 // tableDefWithoutQuery is the table definition without query, which ignores the

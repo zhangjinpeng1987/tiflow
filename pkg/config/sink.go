@@ -179,6 +179,8 @@ func (s *SinkConfig) MaskSensitiveData() {
 
 // CSVConfig defines a series of configuration items for csv codec.
 type CSVConfig struct {
+	// terminator of each line, it can be \r\n, \n, \r or other custom string
+	Terminator string `toml:"terminator" json:"terminator"`
 	// delimiter between fields
 	Delimiter string `toml:"delimiter" json:"delimiter"`
 	// quoting character
